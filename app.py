@@ -165,3 +165,51 @@ elif menu == "AI Prediction":
 
         else:
             st.success("✅ Safe Transaction")
+
+elif menu == "Transaction Monitor":
+
+    st.header("💳 Live Transaction Monitor")
+
+    import random
+    from datetime import datetime
+
+    customers = [
+        "John", "Alice", "David", "Emma",
+        "Sophia", "Mike", "Robert", "Olivia"
+    ]
+
+    locations = [
+        "Hyderabad",
+        "Delhi",
+        "Mumbai",
+        "Bangalore",
+        "Chennai",
+        "Pune"
+    ]
+
+    transactions = []
+
+    for i in range(20):
+
+        amount = random.randint(100, 100000)
+        risk = round(random.uniform(0, 1), 2)
+
+        if risk > 0.8:
+            status = "🚨 Fraud"
+        elif risk > 0.5:
+            status = "⚠️ Medium"
+        else:
+            status = "✅ Safe"
+
+        transactions.append({
+            "Time": datetime.now().strftime("%H:%M:%S"),
+            "Customer": random.choice(customers),
+            "Amount (₹)": amount,
+            "Location": random.choice(locations),
+            "AI Risk": f"{risk*100:.0f}%",
+            "Status": status
+        })
+
+    df = pd.DataFrame(transactions)
+
+    st.dataframe(df, use_container_width=True)
