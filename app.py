@@ -1,3 +1,6 @@
+import plotly.express as px
+import random
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -213,3 +216,101 @@ elif menu == "Transaction Monitor":
     df = pd.DataFrame(transactions)
 
     st.dataframe(df, use_container_width=True)
+
+elif menu == "Analytics":
+
+    st.header("📊 Fraud Analytics Dashboard")
+
+    transactions = [random.randint(100,1000) for i in range(12)]
+    months = ["Jan","Feb","Mar","Apr","May","Jun",
+              "Jul","Aug","Sep","Oct","Nov","Dec"]
+
+    chart_df = pd.DataFrame({
+        "Month": months,
+        "Transactions": transactions
+    })
+
+    fig = px.line(
+        chart_df,
+        x="Month",
+        y="Transactions",
+        markers=True,
+        title="Monthly Transactions"
+    )
+
+    st.plotly_chart(fig, use_container_width=True)
+
+    fraud = random.randint(200,500)
+    safe = random.randint(5000,9000)
+
+    pie = px.pie(
+        values=[safe,fraud],
+        names=["Safe","Fraud"],
+        title="Fraud vs Safe Transactions"
+    )
+
+    st.plotly_chart(pie, use_container_width=True)
+
+    location_df = pd.DataFrame({
+        "City":["Hyderabad","Delhi","Mumbai","Chennai","Bangalore"],
+        "Fraud":[45,90,75,30,60]
+    })
+
+    bar = px.bar(
+        location_df,
+        x="City",
+        y="Fraud",
+        title="Fraud by Location"
+    )
+
+    st.plotly_chart(bar, use_container_width=True)
+
+elif menu == "Reports":
+
+    st.header("📄 Fraud Reports")
+
+    report = pd.DataFrame({
+        "Customer":["John","Alice","David","Emma"],
+        "Amount":[2500,50000,7000,90000],
+        "Risk":["Low","High","Medium","High"]
+    })
+
+    st.dataframe(report)
+
+    csv = report.to_csv(index=False).encode("utf-8")
+
+    st.download_button(
+        "⬇ Download Report",
+        csv,
+        "Fraud_Report.csv",
+        "text/csv"
+    )
+
+    st.success("Reports Ready")
+
+elif menu == "Settings":
+
+    st.header("⚙ Settings")
+
+    dark = st.toggle("Dark Mode", value=True)
+
+    notifications = st.checkbox(
+        "Enable Fraud Alerts",
+        value=True
+    )
+
+    sensitivity = st.slider(
+        "AI Sensitivity",
+        0,
+        100,
+        85
+    )
+
+    refresh = st.slider(
+        "Refresh Interval (seconds)",
+        1,
+        10,
+        3
+    )
+
+    st.success("Settings Saved")
