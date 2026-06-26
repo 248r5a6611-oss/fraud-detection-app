@@ -98,3 +98,70 @@ if menu == "Dashboard":
     })
 
     st.dataframe(df,use_container_width=True)
+
+elif menu == "AI Prediction":
+
+    st.header("🤖 AI Fraud Prediction")
+
+    st.write("Analyze a transaction using AI")
+
+    amount = st.number_input(
+        "Transaction Amount (₹)",
+        min_value=0.0,
+        value=1000.0,
+        step=100.0
+    )
+
+    merchant = st.selectbox(
+        "Merchant Type",
+        [
+            "Shopping",
+            "Restaurant",
+            "ATM",
+            "Fuel",
+            "Transfer"
+        ]
+    )
+
+    device = st.selectbox(
+        "Device",
+        [
+            "Known Device",
+            "New Device"
+        ]
+    )
+
+    location = st.selectbox(
+        "Location",
+        [
+            "Known Location",
+            "Different Location"
+        ]
+    )
+
+    if st.button("🔍 Analyze Transaction"):
+
+        if amount > 50000:
+            risk = 0.95
+        elif amount > 10000:
+            risk = 0.65
+        else:
+            risk = 0.20
+
+        st.subheader("Fraud Probability")
+
+        st.progress(risk)
+
+        st.metric(
+            "Risk Score",
+            f"{risk*100:.1f}%"
+        )
+
+        if risk > 0.8:
+            st.error("🚨 High Risk Transaction")
+
+        elif risk > 0.5:
+            st.warning("⚠️ Medium Risk Transaction")
+
+        else:
+            st.success("✅ Safe Transaction")
