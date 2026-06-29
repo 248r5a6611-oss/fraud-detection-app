@@ -165,13 +165,18 @@ elif menu == "AI Prediction":
             "Risk Score",
             f"{risk*100:.1f}%"
         )
+        
 
+                
         if risk > 0.80:
-    st.error("❌ Recommendation : BLOCK TRANSACTION")
-elif risk > 0.50:
-    st.warning("⚠ Recommendation : VERIFY CUSTOMER")
-else:
-    st.success("✅ Recommendation : APPROVE TRANSACTION")
+                  
+            st.error("❌ Recommendation : BLOCK TRANSACTION")
+
+        elif risk > 0.50:
+            st.warning("⚠ Recommendation : VERIFY CUSTOMER")
+
+        else:
+            st.success("✅ Recommendation : APPROVE TRANSACTION")
 
         if risk > 0.8:
             st.error("🚨 High Risk Transaction")
