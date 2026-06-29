@@ -52,33 +52,34 @@ st.divider()
 # Dashboard
 # -------------------------------
 
-if menu == "Dashboard":
+total_transactions = random.randint(18000, 25000)
+fraud_transactions = random.randint(200, 500)
+safe_transactions = total_transactions - fraud_transactions
+accuracy = round(random.uniform(98.5, 99.9), 2)
 
-    col1, col2, col3, col4 = st.columns(4)
+col1.metric(
+    "Total Transactions",
+    f"{total_transactions:,}",
+    f"+{random.randint(20,150)}"
+)
 
-    col1.metric(
-        "Total Transactions",
-        "18,542",
-        "+125"
-    )
+col2.metric(
+    "Fraud Detected",
+    fraud_transactions,
+    f"+{random.randint(1,20)}"
+)
 
-    col2.metric(
-        "Fraud Detected",
-        "241",
-        "+12"
-    )
+col3.metric(
+    "Safe Transactions",
+    f"{safe_transactions:,}",
+    f"+{random.randint(20,150)}"
+)
 
-    col3.metric(
-        "Safe Transactions",
-        "18,301",
-        "+113"
-    )
-
-    col4.metric(
-        "AI Accuracy",
-        "99.2%",
-        "+0.2%"
-    )
+col4.metric(
+    "AI Accuracy",
+    f"{accuracy}%",
+    "+0.1%"
+)
 
     st.divider()
 
@@ -166,6 +167,13 @@ elif menu == "AI Prediction":
             "Risk Score",
             f"{risk*100:.1f}%"
         )
+
+        if risk > 0.80:
+    st.error("❌ Recommendation : BLOCK TRANSACTION")
+elif risk > 0.50:
+    st.warning("⚠ Recommendation : VERIFY CUSTOMER")
+else:
+    st.success("✅ Recommendation : APPROVE TRANSACTION")
 
         if risk > 0.8:
             st.error("🚨 High Risk Transaction")
