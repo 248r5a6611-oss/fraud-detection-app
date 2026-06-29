@@ -6,12 +6,19 @@ import pandas as pd
 import numpy as np
 import joblib
 
+from streamlit_autorefresh import st_autorefresh
+from datetime import datetime
+
 
 st.set_page_config(
     page_title="AI Fraud Detection",
     page_icon="🛡️",
     layout="wide"
 )
+st.info(f"🕒 Current Time : {datetime.now().strftime('%d-%m-%Y %H:%M:%S')}")
+
+# Auto refresh every 3 seconds
+count = st_autorefresh(interval=3000, key="refresh")
 
 # -------------------------------
 # Sidebar
@@ -173,33 +180,32 @@ elif menu == "Transaction Monitor":
 
     st.header("💳 Live Transaction Monitor")
 
-    import random
-    from datetime import datetime
-
     customers = [
-        "John", "Alice", "David", "Emma",
-        "Sophia", "Mike", "Robert", "Olivia"
+        "Rajitha","Rahul","Priya","Kiran",
+        "Anjali","Vijay","Sneha","Arjun",
+        "Meghana","Ravi"
+    ]
+
+    merchants = [
+        "Amazon","Flipkart","ATM","Netflix",
+        "Swiggy","PhonePe","Google Pay","Paytm"
     ]
 
     locations = [
-        "Hyderabad",
-        "Delhi",
-        "Mumbai",
-        "Bangalore",
-        "Chennai",
-        "Pune"
+        "Hyderabad","Delhi","Mumbai",
+        "Bangalore","Chennai","Pune"
     ]
 
     transactions = []
 
     for i in range(20):
 
-        amount = random.randint(100, 100000)
-        risk = round(random.uniform(0, 1), 2)
+        amount = random.randint(100,100000)
+        risk = round(random.uniform(0,1),2)
 
-        if risk > 0.8:
+        if risk > 0.80:
             status = "🚨 Fraud"
-        elif risk > 0.5:
+        elif risk > 0.50:
             status = "⚠️ Medium"
         else:
             status = "✅ Safe"
@@ -207,6 +213,7 @@ elif menu == "Transaction Monitor":
         transactions.append({
             "Time": datetime.now().strftime("%H:%M:%S"),
             "Customer": random.choice(customers),
+            "Merchant": random.choice(merchants),
             "Amount (₹)": amount,
             "Location": random.choice(locations),
             "AI Risk": f"{risk*100:.0f}%",
@@ -216,6 +223,8 @@ elif menu == "Transaction Monitor":
     df = pd.DataFrame(transactions)
 
     st.dataframe(df, use_container_width=True)
+
+    st.success("🟢 Live transactions refresh every 3 seconds")
 
 elif menu == "Analytics":
 
