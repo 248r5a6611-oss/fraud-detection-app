@@ -52,63 +52,61 @@ st.divider()
 # Dashboard
 # -------------------------------
 
-total_transactions = random.randint(18000, 25000)
-fraud_transactions = random.randint(200, 500)
-safe_transactions = total_transactions - fraud_transactions
-accuracy = round(random.uniform(98.5, 99.9), 2)
+if menu == "Dashboard":
 
-col1.metric(
-    "Total Transactions",
-    f"{total_transactions:,}",
-    f"+{random.randint(20,150)}"
-)
+    col1, col2, col3, col4 = st.columns(4)
 
-col2.metric(
-    "Fraud Detected",
-    fraud_transactions,
-    f"+{random.randint(1,20)}"
-)
+    total_transactions = random.randint(18000, 25000)
+    fraud_transactions = random.randint(200, 500)
+    safe_transactions = total_transactions - fraud_transactions
+    accuracy = round(random.uniform(98.5, 99.9), 2)
 
-col3.metric(
-    "Safe Transactions",
-    f"{safe_transactions:,}",
-    f"+{random.randint(20,150)}"
-)
+    col1.metric(
+        "Total Transactions",
+        f"{total_transactions:,}",
+        f"+{random.randint(20,150)}"
+    )
 
-col4.metric(
-    "AI Accuracy",
-    f"{accuracy}%",
-    "+0.1%"
-)
+    col2.metric(
+        "Fraud Detected",
+        fraud_transactions,
+        f"+{random.randint(1,20)}"
+    )
+
+    col3.metric(
+        "Safe Transactions",
+        f"{safe_transactions:,}",
+        f"+{random.randint(20,150)}"
+    )
+
+    col4.metric(
+        "AI Accuracy",
+        f"{accuracy}%",
+        "+0.1%"
+    )
 
     st.divider()
 
     st.subheader("System Status")
 
     st.success("🟢 AI Engine Running")
-
     st.info("✅ Monitoring Live Transactions")
-
     st.warning("⚠️ 15 Medium Risk Transactions")
-
     st.error("🚨 2 High Risk Transactions Blocked")
 
     st.divider()
 
     st.subheader("Recent Transactions")
 
-    import pandas as pd
-    import numpy as np
-
     df = pd.DataFrame({
-        "Transaction ID": range(1,11),
-        "Customer":["John","Alice","David","Sara","Mike","Emma","Robert","Sophia","Daniel","Olivia"],
-        "Amount":[1200,52000,400,15000,7000,3500,90000,650,8000,1000],
-        "Location":["Hyderabad","Delhi","Mumbai","Chennai","Pune","Bangalore","Kolkata","Hyderabad","Delhi","Mumbai"],
-        "Risk":["Low","High","Low","Medium","Low","Low","High","Low","Medium","Low"]
+        "Transaction ID": range(1, 11),
+        "Customer": ["John","Alice","David","Sara","Mike","Emma","Robert","Sophia","Daniel","Olivia"],
+        "Amount": [1200,52000,400,15000,7000,3500,90000,650,8000,1000],
+        "Location": ["Hyderabad","Delhi","Mumbai","Chennai","Pune","Bangalore","Kolkata","Hyderabad","Delhi","Mumbai"],
+        "Risk": ["Low","High","Low","Medium","Low","Low","High","Low","Medium","Low"]
     })
 
-    st.dataframe(df,use_container_width=True)
+    st.dataframe(df, use_container_width=True)
 
 elif menu == "AI Prediction":
 
