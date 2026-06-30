@@ -404,3 +404,23 @@ elif menu == "Message Fraud Detection":
             st.write(detected)
         else:
             st.success("No suspicious keywords found.")
+
+
+
+elif menu == "Image Fraud Detection":
+
+    st.header("🖼️ Image Fraud Detection")
+
+    uploaded_file = st.file_uploader(
+        "Upload Transaction Screenshot",
+        type=["png","jpg","jpeg"]
+    )
+
+    if uploaded_file is not None:
+        st.image(uploaded_file, use_container_width=True)
+        st.success("Image uploaded successfully")
+
+
+elif menu == "Analytics":
+
+    # Analytics code
