@@ -1,3 +1,7 @@
+import easyocr
+from PIL import Image
+import numpy as np
+
 import plotly.express as px
 import random
 
@@ -414,11 +418,52 @@ elif menu == "Image Fraud Detection":
 
     uploaded_file = st.file_uploader(
         "Upload Transaction Screenshot",
-        type=["png","jpg","jpeg"]
+        type=["png", "jpg", "jpeg"]
     )
 
     if uploaded_file is not None:
-        st.image(uploaded_file, use_container_width=True)
-        st.success("Image uploaded successfully")
 
+        image = Image.open(uploaded_file)
 
+        st.image(image, caption="Uploaded Image", use_container_width=True)
+
+        reader = easyocr.Reader(['en'])
+
+        result = reader.readtext(np.array(image), detail=0)
+
+        extracted_text = " ".join(result)
+
+        st.subheader("📄 Extracted Text")
+        st.write(extracted_text)
+
+        fraud_keywords = [
+            "otp",
+            "verify",
+            "click here",
+            "account blocked",
+            "gift",
+            "winner",
+            "lottery",
+            "http",
+            "https",
+            "urgent",
+            "upi"
+        ]
+
+        score = 0
+
+        for word in fraud_keywords:
+            if word.lower() in extracted_text.lower():
+                score += 1
+
+        if score >= 5:
+            st.error("🚨 Fraud Transaction")
+            st.metric("Fraud Score", "95%")
+
+        elif score >= 3:
+            st.warning("⚠ Suspicious Transaction")
+            st.metric("Fraud Score", "70%")
+
+        else:
+            st.success("✅ Safe Transaction")
+            st.metric("Fraud Score", "15%")
