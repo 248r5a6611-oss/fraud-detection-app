@@ -33,6 +33,7 @@ menu = st.sidebar.radio(
         "Transaction Monitor",
         "AI Prediction",
         "Message Fraud Detection",
+        "Image Fraud Detection",
         "Analytics",
         "Reports",
         "Settings"
@@ -421,6 +422,3 @@ elif menu == "Image Fraud Detection":
         st.success("Image uploaded successfully")
 
 
-elif menu == "Analytics":
-
-    # Analytics code
