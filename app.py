@@ -6,7 +6,7 @@ import pandas as pd
 import numpy as np
 import joblib
 
-from streamlit_autorefresh import st_autorefresh
+
 from datetime import datetime
 
 
@@ -17,8 +17,7 @@ st.set_page_config(
 )
 st.info(f"🕒 Current Time : {datetime.now().strftime('%d-%m-%Y %H:%M:%S')}")
 
-# Auto refresh every 3 seconds
-count = st_autorefresh(interval=3000, key="refresh")
+
 
 # -------------------------------
 # Sidebar
