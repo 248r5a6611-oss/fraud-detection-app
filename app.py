@@ -334,3 +334,74 @@ elif menu == "Settings":
     )
 
     st.success("Settings Saved")
+
+elif menu == "Message Fraud Detection":
+
+    st.header("📱 WhatsApp / SMS Fraud Detection")
+
+    st.write("Paste any WhatsApp, SMS or Email message below.")
+
+    message = st.text_area(
+        "Enter Message",
+        height=200
+    )
+
+    if st.button("🔍 Check Message"):
+
+        message = message.lower()
+
+        fraud_keywords = [
+            "otp",
+            "verify",
+            "urgent",
+            "bank",
+            "account blocked",
+            "click here",
+            "free",
+            "winner",
+            "claim",
+            "gift",
+            "lottery",
+            "password",
+            "upi",
+            "payment",
+            "credit card",
+            "debit card",
+            "kyc",
+            "update account",
+            "limited offer",
+            "congratulations",
+            "login",
+            "http",
+            "https"
+        ]
+
+        score = 0
+
+        for word in fraud_keywords:
+            if word in message:
+                score += 1
+
+        if score >= 5:
+            st.error("🚨 Fraud Message Detected")
+            st.progress(100)
+            st.metric("Fraud Score", "95%")
+
+        elif score >= 3:
+            st.warning("⚠️ Suspicious Message")
+            st.progress(60)
+            st.metric("Fraud Score", "65%")
+
+        else:
+            st.success("✅ Message Looks Safe")
+            st.progress(20)
+            st.metric("Fraud Score", "15%")
+
+        st.subheader("Detected Keywords")
+
+        detected = [word for word in fraud_keywords if word in message]
+
+        if detected:
+            st.write(detected)
+        else:
+            st.success("No suspicious keywords found.")
