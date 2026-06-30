@@ -33,12 +33,12 @@ menu = st.sidebar.radio(
         "Dashboard",
         "Transaction Monitor",
         "AI Prediction",
+        "Message Fraud Detection",
         "Analytics",
         "Reports",
         "Settings"
     ]
 )
-
 # -------------------------------
 # Header
 # -------------------------------
